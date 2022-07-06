@@ -1,13 +1,13 @@
 from django.contrib.auth import get_user_model
 
-from rest_framework import viewsets
+from djoser.views import UserViewSet as DjoserUserViewSet
 
 from .serializers import UserSerializer
 
 User = get_user_model()
 
 
-class UserViewSet(viewsets.ModelViewSet):
+class UserViewSet(DjoserUserViewSet):
     """ViewSet для работы с пользователями."""
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
