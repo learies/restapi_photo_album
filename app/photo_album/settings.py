@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'djoser',
 
     'users.apps.UsersConfig',
+    'albums.apps.AlbumsConfig',
 ]
 
 MIDDLEWARE = [
