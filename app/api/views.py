@@ -9,5 +9,5 @@ User = get_user_model()
 
 class UserViewSet(DjoserUserViewSet):
     """ViewSet для работы с пользователями."""
-    queryset = User.objects.all().order_by('-date_joined')
+    queryset = User.objects.all()
     serializer_class = UserSerializer
