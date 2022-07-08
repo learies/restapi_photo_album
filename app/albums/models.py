@@ -3,6 +3,26 @@ from django.db import models
 from users.models import User
 
 
+class Tag(models.Model):
+    """Теги для альбомов."""
+    name = models.CharField(
+        max_length=200,
+        unique=True,
+    )
+    slug = models.SlugField(
+        max_length=100,
+        unique=True,
+    )
+
+    class Meta:
+        ordering = ('name',)
+        verbose_name = 'Тег'
+        verbose_name_plural = 'Теги'
+
+    def __str__(self):
+        return self.name
+
+
 class Album(models.Model):
     """Альбом с фотографиями."""
     name = models.CharField(
@@ -15,6 +35,14 @@ class Album(models.Model):
         verbose_name='Автор',
         related_name='albums',
         on_delete=models.CASCADE,
+    )
+    tag = models.ForeignKey(
+        to=Tag,
+        verbose_name='Тег',
+        related_name="albums",
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
     )
     created = models.DateTimeField(
         verbose_name='Дата создания',

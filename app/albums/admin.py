@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from albums.models import Album, Photo
+from albums.models import Album, Photo, Tag
 
 EMPTY_VALUE = '-пусто-'
 
@@ -22,5 +22,15 @@ class PhotoAdmin(admin.ModelAdmin):
         'pk', 'album', 'name', 'image', 'created'
     )
     list_filter = ('album',)
+    search_fields = ('name',)
+    empty_value_display = EMPTY_VALUE
+
+
+@admin.register(Tag)
+class TagAdmin(admin.ModelAdmin):
+    list_display = (
+        'pk', 'name', 'slug'
+    )
+    list_filter = ('name',)
     search_fields = ('name',)
     empty_value_display = EMPTY_VALUE
