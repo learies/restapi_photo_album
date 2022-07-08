@@ -6,8 +6,6 @@ from albums.models import Album, Photo
 
 User = get_user_model()
 
-FORMAT_DATETIME = '%d.%m.%Y %H:%M'  # out: "07.07.2022 19:06"
-
 
 class UserSerializer(serializers.ModelSerializer):
     """Сериализатор для модели User."""
@@ -37,11 +35,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 class AlbumSerializer(serializers.ModelSerializer):
     """Сериализатор для модели Album."""
-    author = serializers.StringRelatedField(read_only=True)
-    created = serializers.DateTimeField(
-        format=FORMAT_DATETIME,
-        read_only=True,
-    )
+    author = serializers.StringRelatedField()
 
     class Meta:
         model = Album
@@ -51,15 +45,12 @@ class AlbumSerializer(serializers.ModelSerializer):
             'author',
             'created',
         )
+        read_only_fields = ('author', 'created')
 
 
 class PhotoSerializer(serializers.ModelSerializer):
     """Сериализатор для модели Photo."""
-    album = serializers.StringRelatedField(read_only=True)
-    created = serializers.DateTimeField(
-        format=FORMAT_DATETIME,
-        read_only=True,
-    )
+    album = serializers.StringRelatedField()
 
     class Meta:
         model = Photo
@@ -70,3 +61,4 @@ class PhotoSerializer(serializers.ModelSerializer):
             'image',
             'created',
         )
+        read_only_fields = ('album', 'created')
