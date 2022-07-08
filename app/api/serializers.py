@@ -43,6 +43,7 @@ class AlbumSerializer(serializers.ModelSerializer):
             'id',
             'name',
             'author',
+            'photo_count',
             'created',
         )
         read_only_fields = ('author', 'created')

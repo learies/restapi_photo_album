@@ -22,6 +22,10 @@ class Album(models.Model):
         db_index=True,
     )
 
+    def photo_count(self):
+        """Считает кол-во фото в альбоме."""
+        return self.photo.count()
+
     class Meta:
         ordering = ('created',)
         verbose_name = 'Альбом'
