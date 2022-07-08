@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 
 from rest_framework import serializers
 
-from albums.models import Album, Photo
+from albums.models import Album, Photo, Tag
 
 User = get_user_model()
 
@@ -33,9 +33,21 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
 
+class TagSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Tag
+        fields = (
+            'id',
+            'name',
+            'slug',
+        )
+
+
 class AlbumSerializer(serializers.ModelSerializer):
     """Сериализатор для модели Album."""
     author = serializers.StringRelatedField()
+    tag = serializers.StringRelatedField()
 
     class Meta:
         model = Album
@@ -44,6 +56,7 @@ class AlbumSerializer(serializers.ModelSerializer):
             'name',
             'author',
             'photo_count',
+            'tag',
             'created',
         )
         read_only_fields = ('author', 'created')
