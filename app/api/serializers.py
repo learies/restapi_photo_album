@@ -2,9 +2,11 @@ from django.contrib.auth import get_user_model
 
 from rest_framework import serializers
 
-from albums.models import Album
+from albums.models import Album, Photo
 
 User = get_user_model()
+
+FORMAT_DATETIME = '%d.%m.%Y %H:%M'  # out: "07.07.2022 19:06"
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -34,10 +36,10 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class AlbumSerializer(serializers.ModelSerializer):
-    """Сериализатор для модели User."""
+    """Сериализатор для модели Album."""
     author = serializers.StringRelatedField(read_only=True)
     created = serializers.DateTimeField(
-        format='%d.%m.%Y %H:%M',  # out: "07.07.2022 19:06"
+        format=FORMAT_DATETIME,
         read_only=True,
     )
 
@@ -47,5 +49,24 @@ class AlbumSerializer(serializers.ModelSerializer):
             'id',
             'name',
             'author',
+            'created',
+        )
+
+
+class PhotoSerializer(serializers.ModelSerializer):
+    """Сериализатор для модели Photo."""
+    album = serializers.StringRelatedField(read_only=True)
+    created = serializers.DateTimeField(
+        format=FORMAT_DATETIME,
+        read_only=True,
+    )
+
+    class Meta:
+        model = Photo
+        fields = (
+            'id',
+            'album',
+            'name',
+            'image',
             'created',
         )
