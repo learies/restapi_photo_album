@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.db.models.aggregates import Count
 
 from djoser.views import UserViewSet as DjoserUserViewSet
 from rest_framework import viewsets
@@ -23,6 +24,12 @@ class AlbumViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         """Метод добавит автора к альбому."""
         serializer.save(author=self.request.user)
+
+    def get_queryset(self):
+        """Метод выведет только список альбомов автора."""
+        return self.queryset.filter(
+            author=self.request.user
+        ).annotate(photo_count=Count('photo'))
 
 
 class PhotoViewSet(viewsets.ModelViewSet):
