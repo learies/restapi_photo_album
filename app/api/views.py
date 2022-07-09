@@ -20,6 +20,10 @@ class AlbumViewSet(viewsets.ModelViewSet):
     queryset = Album.objects.all()
     serializer_class = AlbumSerializer
 
+    def perform_create(self, serializer):
+        """Метод добавит автора к альбому."""
+        serializer.save(author=self.request.user)
+
 
 class PhotoViewSet(viewsets.ModelViewSet):
     """ViewSet для работы с фотографиями."""
