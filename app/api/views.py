@@ -36,3 +36,7 @@ class PhotoViewSet(viewsets.ModelViewSet):
     """ViewSet для работы с фотографиями."""
     queryset = Photo.objects.all()
     serializer_class = PhotoSerializer
+
+    def get_queryset(self):
+        """Метод выводит список фотографий автора."""
+        return self.queryset.filter(album__author=self.request.user)
