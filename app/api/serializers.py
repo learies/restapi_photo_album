@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
 from albums.models import Album, Photo, Tag
+from api.validations import validate_image
 
 User = get_user_model()
 
@@ -64,6 +65,7 @@ class PhotoSerializer(serializers.ModelSerializer):
     """Сериализатор для модели Photo."""
     album = serializers.StringRelatedField()
     tag = serializers.StringRelatedField()
+    image = serializers.ImageField(validators=[validate_image])
 
     class Meta:
         model = Photo
