@@ -26,7 +26,7 @@ class AlbumViewSet(viewsets.ModelViewSet):
         serializer.save(author=self.request.user)
 
     def get_queryset(self):
-        """Метод выведет только список альбомов автора."""
+        """Метод выводит список альбомов автора."""
         return self.queryset.filter(
             author=self.request.user
         ).annotate(photo_count=Count('photo'))
