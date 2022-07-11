@@ -36,14 +36,6 @@ class Album(models.Model):
         related_name='albums',
         on_delete=models.CASCADE,
     )
-    tag = models.ForeignKey(
-        to=Tag,
-        verbose_name='Тег',
-        related_name="albums",
-        on_delete=models.CASCADE,
-        blank=True,
-        null=True,
-    )
     created = models.DateTimeField(
         verbose_name='Дата создания',
         auto_now_add=True,
@@ -81,6 +73,14 @@ class Photo(models.Model):
         upload_to='app/',
         blank=False,
         null=False,
+    )
+    tag = models.ForeignKey(
+        to=Tag,
+        verbose_name='Тег',
+        related_name='tag',
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
     )
     created = models.DateTimeField(
         verbose_name='Дата создания',

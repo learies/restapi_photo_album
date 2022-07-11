@@ -47,7 +47,6 @@ class TagSerializer(serializers.ModelSerializer):
 class AlbumSerializer(serializers.ModelSerializer):
     """Сериализатор для модели Album."""
     author = serializers.StringRelatedField()
-    tag = serializers.StringRelatedField()
 
     class Meta:
         model = Album
@@ -56,7 +55,6 @@ class AlbumSerializer(serializers.ModelSerializer):
             'name',
             'author',
             'photo_count',
-            'tag',
             'created',
         )
         read_only_fields = ('author', 'created')
@@ -65,6 +63,7 @@ class AlbumSerializer(serializers.ModelSerializer):
 class PhotoSerializer(serializers.ModelSerializer):
     """Сериализатор для модели Photo."""
     album = serializers.StringRelatedField()
+    tag = serializers.StringRelatedField()
 
     class Meta:
         model = Photo
@@ -73,6 +72,7 @@ class PhotoSerializer(serializers.ModelSerializer):
             'album',
             'name',
             'image',
+            'tag',
             'created',
         )
         read_only_fields = ('album', 'created')
