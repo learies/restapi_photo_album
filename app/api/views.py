@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.db.models.aggregates import Count
 
 from djoser.views import UserViewSet as DjoserUserViewSet
-from rest_framework import viewsets
+from rest_framework import filters, viewsets
 from rest_framework.response import Response
 
 from albums.models import Album, Photo
@@ -21,6 +21,8 @@ class AlbumViewSet(viewsets.ModelViewSet):
     """ViewSet для работы с альбомами."""
     queryset = Album.objects.all()
     serializer_class = AlbumSerializer
+    filter_backends = (filters.OrderingFilter,)
+    ordering_fields = ('created', 'photo_count')
 
     def perform_create(self, serializer):
         """Метод добавит автора к альбому."""
@@ -37,6 +39,8 @@ class PhotoViewSet(viewsets.ModelViewSet):
     """ViewSet для работы с фотографиями."""
     queryset = Photo.objects.all()
     serializer_class = PhotoSerializer
+    filter_backends = (filters.OrderingFilter,)
+    ordering_fields = ('album', 'created')
 
     def get_queryset(self):
         """Метод выводит список фотографий автора."""
